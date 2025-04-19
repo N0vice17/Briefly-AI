@@ -1,9 +1,13 @@
-const express = require("express")
-const http = require("http")
-const cors = require("cors")
-const { Server } = require("socket.io")
-const connectDB = require("./config/db")
-require("dotenv").config();
+import express from "express"
+import http from "http"
+import cors from "cors"
+import { Server } from "socket.io"
+import connectDB from "./config/db.js"
+import dotenv from "dotenv"
+import router from "./routes/auth.js"
+// import message from "./routes/message.js"
+
+dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
@@ -13,13 +17,11 @@ const io = new Server(server,{
     },
 })
 
-connectDB();
-
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/messages", require("./routes/message"));
+app.use("/api/auth", router);
+// app.use("/api/messages", message);
 
 io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
@@ -39,5 +41,7 @@ io.on("connection", (socket) => {
     });
   });
   
-  const PORT = process.env.PORT;
-  server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  server.listen(process.env.PORT ,() => {
+    console.log(`Server running on port ${process.env.PORT}`)
+    connectDB();
+  });
