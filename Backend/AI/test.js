@@ -1,6 +1,9 @@
 import { InferenceClient } from "@huggingface/inference";
+import dotenv from "dotenv"
 
-const client = new InferenceClient("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");
+dotenv.config();
+
+const client = new InferenceClient(process.env.HUGGINGFACE_API);
 
 const chatCompletion = await client.chatCompletion({
     provider: "nebius",
