@@ -1,6 +1,6 @@
 import React from "react"
 import { BrowserRouter as Router, Routes, Link, Route } from "react-router-dom"
-import BackgroundPaths from "./Components/Home/BackgroundPath"
+import Home from "./Components/Home/Home"
 import Login from "./Components/Login and Register/Login"
 
 export default function App() {
@@ -8,7 +8,7 @@ export default function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<BackgroundPaths />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
