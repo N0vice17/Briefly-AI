@@ -2,7 +2,6 @@ import React from "react";
 import { BackgroundBeams } from "@/components/ui/background-beams.jsx";
 import { FlipText } from "@/components/magicui/flip-text";
 
-
 export default function Home() {
   return (
     <>
