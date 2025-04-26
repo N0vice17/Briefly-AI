@@ -1,47 +1,24 @@
-import { InferenceClient } from "@huggingface/inference";
 import dotenv from "dotenv"
-import { response } from "express";
+import axios from "axios"
 
 dotenv.config();
 
-const client = new InferenceClient(process.env.HUGGINGFACE_API);
-
-export async function DeepSeek(prompt) {
-    const chatCompletion = await client.chatCompletion({
-        provider: "nebius",
-        model: "deepseek-ai/DeepSeek-V3-0324",
-        messages: [
-            {
-                role: "user",
-                content: `${prompt}`,
-            },
-        ],
-        max_tokens: 50,
-    });
-    return chatCompletion.choices[0].message.content.replace(/[^a-zA-Z0-9 ]/g, '');
-}
-
-export function GPT(prompt) {
-    async function query(data) {
-        const response = await fetch(
-            "https://router.huggingface.co/hf-inference/models/openai-community/gpt2",
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.HUGGINGFACE_API}`,
-                    "Content-Type": "application/json",
-                },
-                method: "POST",
-                body: JSON.stringify(data),
+export async function Gemma(prompt) {
+    try {
+        const output = await axios.post('http://localhost:11434/api/generate', {
+            model: 'gemma3:1b-it-qat',
+            prompt: `${prompt}`,
+            stream: false,
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
             }
-        );
-        const result = await response.json();
-        return result;
+        });
+        return output.data.response;
+    } catch (error) {
+        return `Error communicating with Gemma: ${error.message}`;
     }
-    let answer = "";
-    query({inputs: prompt}).then((response) => {
-        answer = JSON.stringify(response);
-    });
-    return answer;
 }
+
 
 

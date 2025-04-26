@@ -2,7 +2,7 @@ import User from "../models/User.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
-import { DeepSeek, GPT } from "../AI/test.js"
+import { Gemma } from "../AI/test.js"
 
 dotenv.config
 
@@ -34,10 +34,5 @@ export async function login(req, res) {
 
 export async function ai(req, res) {
     const { prompt } = req.body;
-    // const output = await DeepSeek(prompt);
-    // console.log(output);
-    res.status(201).json({ 
-        "DeepSeek": await DeepSeek(prompt),
-        "GPT": GPT(prompt)
-    });
+    res.status(201).json({ "Gemma" : await Gemma(prompt) });
 }
