@@ -1,28 +1,25 @@
 import React from "react";
 import { BackgroundBeams } from "../ui/background-beams";
+import { Spotlight } from "../ui/spotlight-new";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import ollama from "../../assets/ollama.png"
+
 
 export default function Home() {
   return (
     <div
       className="h-screen w-full bg-neutral-950 relative flex flex-col items-center justify-center antialiased">
+        <Avatar className="z-20">
+          <AvatarImage src={ollama} />
+        </Avatar>
       <div className="max-w-2xl mx-auto p-4">
-        <h1
-          className="relative z-10 text-lg md:text-7xl  bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-600  text-center font-sans font-bold">
+        <Spotlight />
+        <h1 className="text-4xl md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
           Briefly AI
         </h1>
-        <p></p>
-        <p
-          className="text-neutral-500 max-w-lg mx-auto my-2 text-sm text-center relative z-10">
-          Welcome to MailJet, the best transactional email service on the web.
-          We provide reliable, scalable, and customizable email solutions for
-          your business. Whether you&apos;re sending order confirmations,
-          password reset emails, or promotional campaigns, MailJet has got you
-          covered.
+        <p className="mt-4 font-normal text-base text-neutral-300 max-w-lg text-center mx-auto">
+          Powered by the GEMMA3 model, our platform allows you to interact with PDF documents through seamless conversations. Easily search, ask questions, and extract key insights from your PDFs, transforming the way you engage with your content
         </p>
-        <input
-          type="text"
-          placeholder="hi@manuarora.in"
-          className="rounded-lg border border-neutral-800 focus:ring-2 focus:ring-teal-500  w-full relative z-10 mt-4  bg-neutral-950 placeholder:text-neutral-700" />
       </div>
       <BackgroundBeams />
     </div>
