@@ -4,10 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useNavigate } from "react-router-dom"
-import { Link } from "react-router-dom"
 import axios from "axios"
 
-export function LoginForm(props) {
+export function SignupForm(props) {
     const { className, ...rest } = props
     const [email, setEmail] = useState()
     const [password, setPassword] = useState();
@@ -49,9 +48,9 @@ export function LoginForm(props) {
             </div>
             <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
-                <Link to="/signup" className="underline underline-offset-4">
+                <a href="#" className="underline underline-offset-4">
                     Sign up
-                </Link>
+                </a>
             </div>
         </div>
     )
