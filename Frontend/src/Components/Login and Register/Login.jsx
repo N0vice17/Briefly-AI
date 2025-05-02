@@ -1,5 +1,6 @@
 import { LoginForm } from "./login-form"
 import { Link } from "react-router-dom"
+import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 
 export default function Login() {
     return (
@@ -17,10 +18,15 @@ export default function Login() {
                 </div>
             </div>
             <div className="relative hidden bg-muted lg:block">
-                <img
-                    src="/placeholder.svg"
-                    alt="Image"
-                    className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+                <FlickeringGrid
+                    className="relative inset-0 z-20 [mask-image:radial-gradient(450px_circle_at_center,white,transparent)]"
+                    squareSize={5}
+                    gridGap={6}
+                    color="black"
+                    maxOpacity={0.5}
+                    flickerChance={0.1}
+                    height={800}
+                    width={800}
                 />
             </div>
         </div>

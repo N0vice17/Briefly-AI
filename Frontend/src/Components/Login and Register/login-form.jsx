@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
+import { Toaster, toast } from 'sonner'
 import axios from "axios"
 
 export function LoginForm(props) {
@@ -19,17 +20,21 @@ export function LoginForm(props) {
             password: password,
         }
         axios.post("http://localhost:3000/api/login", payload).then((res) => {
-            navigate("/chat")
+            toast.success("Login Successfull")
+            setTimeout(() => {
+                navigate("/chat")
+            }, 1500)
         }).catch((err) => {
-            alert(`Bsdk mkc ${err}`)
+            toast.error("Wrong Credentials")
         })
     }
     return (
         <div className={cn("flex flex-col gap-6", className)} {...rest}>
+            <Toaster position="top-right" richColors />
             <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Login to your account</h1>
                 <p className="text-balance text-sm text-muted-foreground">
-                    Enter your email below to login to your account
+                    Enter your email below to login to your account 
                 </p>
             </div>
             <div className="grid gap-6">
