@@ -19,7 +19,7 @@ export default function Home() {
           Powered by the GEMMA3 model, our platform allows you to interact with PDF documents through seamless conversations. Easily search, ask questions, and extract key insights from your PDFs, transforming the way you engage with your content
         </p>
       </div>
-      <Link to="http://localhost:5173/login" className="z-20">
+      <Link to="/login" className="z-20">
         <Button variant="secondary" className="w-20 h-20 mt-5 rounded-xl cursor-pointer">
           <ArrowRight className="size-6" />
         </Button>

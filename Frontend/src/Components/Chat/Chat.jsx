@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Menu, ArrowLeft, ArrowRight, Upload } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Upload } from 'lucide-react';
 
 export default function Chat() {
     const [isOpen, setIsOpen] = useState(true);
@@ -23,15 +23,15 @@ export default function Chat() {
     return (
         <>
             <div className="flex h-screen">
-                <div className={`transition-all duration-300 ${isOpen ? 'w-100' : 'w-16'} bg-[#212327] text-white p-4 overflow-hidden`}>
+                <div className={`transition-all duration-450 ${isOpen ? 'w-100' : 'w-13'} bg-[#212327] text-white p-4 overflow-hidden`}>
                     <button onClick={() => setIsOpen(!isOpen)} className="text-white mb-4 focus:outline-none">
-                        {isOpen ? <ArrowLeft size={24} className="cursor-pointer" /> : <ArrowRight size={24} className="cursor-pointer" />}
+                        {isOpen ? <ChevronLeft size={24} className="cursor-pointer" /> : <ChevronRight size={24} className="cursor-pointer" />}
                     </button>
                     <div className={`${isOpen ? 'block' : 'hidden'} space-y-4`}>
                         <div className="p-4 max-w-md mx-auto space-y-4">
                             <input type="file" multiple onChange={handleFileChange} ref={fileInputRef} className="hidden" />
                             <button onClick={handleButtonClick} className="flex flex-row justify-between w-40 bg-white text-black px-4 py-2 rounded cursor-pointer">
-                                Upload Files <Upload/>
+                                Upload Files <Upload />
                             </button>
                             {files.length > 0 && (
                                 <div className="mt-4 space-y-3">
