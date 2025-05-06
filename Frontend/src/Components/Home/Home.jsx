@@ -16,7 +16,7 @@ export default function Home() {
           Briefly AI
         </h1>
         <p className="mt-4 font-bold text-base text-white max-w-lg text-center mx-auto">
-          Powered by the GEMMA3 model, our platform allows you to interact with PDF documents through seamless conversations. Easily search, ask questions, and extract key insights from your PDFs, transforming the way you engage with your content
+          Powered by the GEMINI, our platform allows you to interact with PDF documents through seamless conversations. Easily search, ask questions, and extract key insights from your PDFs, transforming the way you engage with your content
         </p>
       </div>
       <Link to="/login" className="z-20">

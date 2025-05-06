@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight, Upload } from 'lucide-react';
+import axios from "axios";
+import { Toaster, toast } from 'sonner'
 
 export default function Chat() {
     const [isOpen, setIsOpen] = useState(true);
@@ -11,9 +13,19 @@ export default function Chat() {
     };
 
     const handleFileChange = (e) => {
+        if(!e.target.files) return;
         const filename = e.target.files[0].name;
         if (!files.includes(filename) && files.length < 5) {
             setFiles((prev) => [...prev, filename]);
+
+            const formdata = new FormData();
+            formdata.append("file",e.target.files.item(0));
+
+            axios.post("http://localhost:3000/api/upload",formdata).then((res) => {
+                toast.success("Pdf Uploaded")
+            }).catch((err) => {
+                toast.error("Pdf not uploaded try again")
+            })
         }
     };
 
@@ -23,13 +35,14 @@ export default function Chat() {
     return (
         <>
             <div className="flex h-screen">
+                <Toaster position="top-right" richColors />
                 <div className={`transition-all duration-450 ${isOpen ? 'w-100' : 'w-13'} bg-[#212327] text-white p-4 overflow-hidden`}>
                     <button onClick={() => setIsOpen(!isOpen)} className="text-white mb-4 focus:outline-none">
                         {isOpen ? <ChevronLeft size={24} className="cursor-pointer" /> : <ChevronRight size={24} className="cursor-pointer" />}
                     </button>
                     <div className={`${isOpen ? 'block' : 'hidden'} space-y-4`}>
                         <div className="p-4 max-w-md mx-auto space-y-4">
-                            <input type="file" multiple onChange={handleFileChange} ref={fileInputRef} className="hidden" />
+                            <input id = "pdffiles"type="file" multiple onChange={handleFileChange} ref={fileInputRef} className="hidden" />
                             <button onClick={handleButtonClick} className="flex flex-row justify-between w-40 bg-white text-black px-4 py-2 rounded cursor-pointer">
                                 Upload Files <Upload />
                             </button>

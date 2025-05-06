@@ -2,7 +2,13 @@ import User from "../models/User.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
-import { Gemma } from "../AI/test.js"
+import pdfParse from 'pdf-parse';
+import multer from 'multer';
+import { Pinecone } from '@pinecone-database/pinecone';
+import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
+import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
+import { PineconeStore } from '@langchain/pinecone';
+import { Document } from '@langchain/core/documents';
 
 dotenv.config
 
@@ -32,7 +38,51 @@ export async function login(req, res) {
     res.status(201).json({ token: token, userId: user._id, username: user.username })
 }
 
-export async function ai(req, res) {
-    const { prompt } = req.body;
-    res.status(201).json({ "Gemma" : await Gemma(prompt) });
+export async function upload(req, res) {
+    const uploadMiddleware = multer({ storage: multer.memoryStorage() }).single('file');
+    uploadMiddleware(req, res, async (err) => {
+        if (err) {
+            res.status(500).json({ msg: "Multer error" });
+        }
+
+        try {
+            const pdfBuffer = req.file.buffer;
+            const pdfData = await pdfParse(pdfBuffer);
+            const text = pdfData.text;
+
+            const doc = [new Document({ pageContent: text, metadata: { source: 'uploaded-pdf' } })];
+
+            const splitter = new RecursiveCharacterTextSplitter({
+                chunkSize: 1000,
+                chunkOverlap: 200,
+            });
+            const docs = await splitter.splitDocuments(doc);
+
+            const embeddings = new GoogleGenerativeAIEmbeddings({
+                model: 'embedding-001',
+                apiKey: process.env.GOOGLE_API_KEY,
+                taskType: 'RETRIEVAL_DOCUMENT',
+            });
+
+            const pinecone = new Pinecone({
+                apiKey: process.env.PINECONE_API_KEY,
+            });
+
+            const pineconeIndex = pinecone.index(process.env.PINECONE_INDEX_NAME);
+
+            await PineconeStore.fromDocuments(docs, embeddings, {
+                pineconeIndex: pineconeIndex,
+                namespace: 'pdf-docs',
+            });
+
+            res.json({ message: 'PDF processed and stored in Pinecone.' });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Failed to process PDF.' });
+        }
+    })
+}
+
+export async function ask(req, res) {
+    res.json({ msg: "bhag bsdk" })
 }
