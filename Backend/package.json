@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@google/genai": "^0.13.0",
     "@langchain/core": "^0.3.53",
     "@langchain/google-genai": "^0.2.6",
     "@langchain/pinecone": "^0.2.0",

@@ -84,5 +84,42 @@ export async function upload(req, res) {
 }
 
 export async function ask(req, res) {
-    res.json({ msg: "bhag bsdk" })
+    const { query } = req.body;
+  if (!query) return res.status(400).json({ error: 'Question is required.' });
+
+  try {
+    const embeddings = new GoogleGenerativeAIEmbeddings({
+      modelName: "embedding-001", 
+      apiKey: process.env.GEMINI_API_KEY,
+      taskType: "RETRIEVAL_QUERY",
+    });
+
+    const pinecone = new Pinecone({
+        apiKey: process.env.PINECONE_API_KEY,
+    });
+
+    const pineconeIndex = pinecone.index(process.env.PINECONE_INDEX_NAME);
+
+    const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
+      pineconeIndex: pineconeIndex, 
+      namespace: 'pdf-docs',
+    });
+
+    const results = await vectorStore.similaritySearch(query, 4);
+    const context = results.map((doc) => doc.pageContent).join('\n\n');
+
+    const { GoogleGenAI } = await import('@google/genai'); 
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.0-flash",
+      contents: `Use the context below to answer the question:\n\n${context}\n\nQuestion: ${query}`,
+    });
+
+    const answer = response.text || 'No answer found.';
+    res.json({ answer });
+  } catch (error) {
+    console.error(error.response?.data || error);
+    res.status(500).json({ error: 'Failed to retrieve answer.' });
+  }
 }
