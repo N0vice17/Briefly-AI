@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils.js"
 import { Button } from "@/Components/ui/button"
 import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label"
