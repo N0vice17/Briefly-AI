@@ -84,7 +84,7 @@ export async function upload(req, res) {
 }
 
 export async function ask(req, res) {
-    const { query } = req.body;
+    const query = req.query.query;
   if (!query) return res.status(400).json({ error: 'Question is required.' });
 
   try {

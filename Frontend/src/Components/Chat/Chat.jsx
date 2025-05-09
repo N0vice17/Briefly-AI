@@ -3,6 +3,8 @@ import { ChevronLeft, ChevronRight, Upload } from 'lucide-react';
 import axios from "axios";
 import { Toaster, toast } from 'sonner'
 import { FileText } from 'lucide-react';
+import ChatInput from "./ChatInput";
+import ChatInterface from "./ChatInterface";
 
 export default function Chat() {
     const [isOpen, setIsOpen] = useState(true);
@@ -63,8 +65,7 @@ export default function Chat() {
                                                 onClick={() => handleRemoveFile(index)}
                                                 className="cursor-pointer ml-4 text-blue-400 hover:text-blue-500 active:text-blue-600 rounded-full p-1.5 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-black"
                                                 aria-label="Remove file"
-                                                title="Remove file"
-                                            >
+                                                title="Remove file">
                                                 ✕
                                             </button>
                                         </div>
@@ -74,7 +75,8 @@ export default function Chat() {
                         </div>
                     </div>
                 </div>
-                <div className="w-screen p-6 bg-[#252525]">
+                <div className="w-screen bg-[#252525]">
+                <ChatInterface/>
                 </div>
             </div>
         </>
