@@ -1,6 +1,6 @@
 import { LoginForm } from "./login-form"
 import { Link } from "react-router-dom"
-import { FlickeringGrid } from "@/components/magicui/flickering-grid";
+import { FlickeringGrid } from "@/Components/magicui/flickering-grid";
 
 export default function Login() {
     return (
