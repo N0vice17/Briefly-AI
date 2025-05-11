@@ -13,13 +13,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  server : {
-    proxy: {
-      "/api" : {
-        target: "https://briefly-ai.onrender.com/",
-        changeOrigin: false,
-        secure: false,
-      }
-    }
-  }
+  // server : {
+  //   proxy: {
+  //     "/api" : {
+  //       target: "https://briefly-ai.onrender.com/",
+  //       changeOrigin: true,
+  //       secure: false,
+  //     }
+  //   }
+  // }
 })
