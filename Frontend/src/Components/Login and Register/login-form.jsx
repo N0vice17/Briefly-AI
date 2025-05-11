@@ -19,7 +19,7 @@ export function LoginForm(props) {
             email: email,
             password: password,
         }
-        axios.post("http://localhost:3000/api/login", payload).then((res) => {
+        axios.post("/api/login", payload).then((res) => {
             toast.success("Login Successfull")
             setTimeout(() => {
                 navigate("/chat")

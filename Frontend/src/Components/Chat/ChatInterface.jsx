@@ -22,7 +22,7 @@ const ChatInterface = () => {
         try {
             await new Promise(resolve => setTimeout(resolve, 1500));
 
-            const response = await axios.get("http://localhost:3000/api/ask", {
+            const response = await axios.get("/api/ask", {
                 params: {
                     query: content,
                 }

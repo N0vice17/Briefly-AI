@@ -21,7 +21,7 @@ export function SignupForm(props) {
             email: email,
             password: password
         }
-        axios.post("http://localhost:3000/api/register", payload).then((res) => {
+        axios.post("/api/register", payload).then((res) => {
             toast.success("Registered Succesfully");
             setTimeout(() => {
                 navigate("/login")
