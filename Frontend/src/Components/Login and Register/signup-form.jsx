@@ -21,7 +21,7 @@ export function SignupForm(props) {
             email: email,
             password: password
         }
-        axios.post("/api/register", payload).then((res) => {
+        axios.post("https://briefly-ai.onrender.com/api/register", payload).then((res) => {
             toast.success("Registered Succesfully");
             setTimeout(() => {
                 navigate("/login")

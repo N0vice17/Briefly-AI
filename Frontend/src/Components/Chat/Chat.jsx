@@ -24,7 +24,7 @@ export default function Chat() {
             const formdata = new FormData();
             formdata.append("file", e.target.files.item(0));
 
-            axios.post("/api/upload", formdata).then((res) => {
+            axios.post("https://briefly-ai.onrender.com/api/upload", formdata).then((res) => {
                 toast.success("Pdf Uploaded")
             }).catch((err) => {
                 toast.error("Pdf not uploaded try again")

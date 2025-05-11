@@ -22,7 +22,7 @@ const ChatInterface = () => {
         try {
             await new Promise(resolve => setTimeout(resolve, 1500));
 
-            const response = await axios.get("/api/ask", {
+            const response = await axios.get("https://briefly-ai.onrender.com/api/ask", {
                 params: {
                     query: content,
                 }
