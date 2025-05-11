@@ -17,7 +17,7 @@ export default defineConfig({
     proxy: {
       "/api" : {
         target: "https://briefly-ai.onrender.com/",
-        changeOrigin: true,
+        changeOrigin: false,
         secure: false,
       }
     }
