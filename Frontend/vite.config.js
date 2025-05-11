@@ -18,7 +18,7 @@ export default defineConfig({
       "/api" : {
         target: "https://briefly-ai.onrender.com/",
         changeOrigin: true,
-        secure: true,
+        secure: false,
       }
     }
   }
