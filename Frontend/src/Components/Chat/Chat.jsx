@@ -27,6 +27,7 @@ export default function Chat() {
             axios.post("https://briefly-ai.onrender.com/api/upload", formdata).then((res) => {
                 toast.success("Pdf Uploaded")
             }).catch((err) => {
+                console.log(err);
                 toast.error("Pdf not uploaded try again")
             })
         }

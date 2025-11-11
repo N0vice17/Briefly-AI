@@ -59,11 +59,11 @@ export async function upload(req, res) {
             const docs = await splitter.splitDocuments(doc);
 
             const embeddings = new GoogleGenerativeAIEmbeddings({
-                model: 'embedding-001',
+                model: 'models/gemini-embedding-001',
                 apiKey: process.env.GOOGLE_API_KEY,
                 taskType: 'RETRIEVAL_DOCUMENT',
             });
-
+            
             const pinecone = new Pinecone({
                 apiKey: process.env.PINECONE_API_KEY,
             });
@@ -89,7 +89,7 @@ export async function ask(req, res) {
 
   try {
     const embeddings = new GoogleGenerativeAIEmbeddings({
-      modelName: "embedding-001", 
+      modelName: "models/gemini-embedding-001", 
       apiKey: process.env.GEMINI_API_KEY,
       taskType: "RETRIEVAL_QUERY",
     });
