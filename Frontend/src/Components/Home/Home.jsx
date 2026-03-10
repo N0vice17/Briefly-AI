@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowRight, FileText, MessageSquare, Search, Sparkles, Zap } from "lucide-react";
 import { BackgroundBeams } from "../ui/background-beams";
-import FeatureCard from "@/components/ui/FeatureCard";
+import FeatureCard from "../ui/FeatureCard";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "../ui/button";
