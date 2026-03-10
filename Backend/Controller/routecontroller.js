@@ -9,6 +9,7 @@ import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { PineconeStore } from '@langchain/pinecone';
 import { Document } from '@langchain/core/documents';
+import Groq from "groq-sdk";
 
 dotenv.config
 
@@ -90,7 +91,7 @@ export async function ask(req, res) {
   try {
     const embeddings = new GoogleGenerativeAIEmbeddings({
       modelName: "models/gemini-embedding-001", 
-      apiKey: process.env.GEMINI_API_KEY,
+      apiKey: process.env.GOOGLE_API_KEY,
       taskType: "RETRIEVAL_QUERY",
     });
 
@@ -108,15 +109,28 @@ export async function ask(req, res) {
     const results = await vectorStore.similaritySearch(query, 4);
     const context = results.map((doc) => doc.pageContent).join('\n\n');
 
-    const { GoogleGenAI } = await import('@google/genai'); 
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
-    const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash",
-      contents: `Use the context below to answer the question:\n\n${context}\n\nQuestion: ${query}`,
+    const groq = new Groq({
+        apiKey: process.env.GROQ_API_KEY,
     });
 
-    const answer = response.text || 'No answer found.';
+    const completion = await groq.chat.completions.create({
+  model: "llama-3.3-70b-versatile", // best Groq model currently
+  messages: [
+    {
+      role: "system",
+      content:
+        "You are a helpful assistant. Answer ONLY using the provided context.",
+    },
+    {
+      role: "user",
+      content: `Context:\n${context}\n\nQuestion: ${query}`,
+    },
+  ],
+  temperature: 0.3,
+});
+
+    const answer = completion.choices[0]?.message?.content || "No answer found.";
+    // const answer = response.text || 'No answer found.';
     res.json({ answer });
   } catch (error) {
     console.error(error.response?.data || error);
