@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Zap, ArrowRight, Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { Button } from "../button.jsx";
-import { Input } from "../input.jsx";
-import { Label } from "../label.jsx";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { toast } from "sonner";
 import axios from "axios"
 // import ThemeToggle from "@/components/ThemeToggle";
